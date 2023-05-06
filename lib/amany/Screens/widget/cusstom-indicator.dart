@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CusstomIndicator extends StatelessWidget {
   const CusstomIndicator({Key? key,  @required this.dotsIndex}) : super(key: key);
-  final int? dotsIndex;
+  final double? dotsIndex;
 
   @override
   Widget build(BuildContext context) {
