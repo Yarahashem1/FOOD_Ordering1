@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "406512963880",
+    "project_id": "food-ordering-92c6e",
+    "storage_bucket": "food-ordering-92c6e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406512963880:android:7f439de5aae9482d58c01d",
+        "android_client_info": {
+          "package_name": "com.yara.food_ordering"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "406512963880-k14pqcv8524554rmk87l3br0e5vf1a6r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yara.food_ordering",
+            "certificate_hash": "e866331b3491b910c7a99891fb4ceb67c77dc3a8"
+          }
+        },
+        {
+          "client_id": "406512963880-v9uvd28svoo3dgv3nhb0mdrl9o42qc0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB76Vmq0zm2HiX6F-JsnuyaAGmXcH2LKfY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "406512963880-89fabh9h4od4f8d3tvscimku0efm93d9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

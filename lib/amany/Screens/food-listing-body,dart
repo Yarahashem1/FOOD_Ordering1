@@ -1,0 +1,165 @@
+import 'package:dots_indicator/dots_indicator.dart';
+import 'package:flutter/material.dart';
+
+import 'package:food_ordering/cart_screen.dart';
+import 'package:food_ordering/food_catagory_screen.dart';
+import 'package:get/get.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+
+import 'widgets/cusstom_indicator.dart';
+import 'widgets/cusstom_page_view.dart';
+
+class FoodListingBody extends StatefulWidget {
+  const FoodListingBody({Key? key}) : super(key: key);
+
+  @override
+  State<FoodListingBody> createState() => _FoodListingBodyState();
+}
+
+class _FoodListingBodyState extends State<FoodListingBody> {
+  PageController? pageController;
+  @override
+  void initState() {
+    pageController = PageController(
+      initialPage: 0,
+    )..addListener(() {
+      setState(() {
+        
+      });
+    });
+    
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      child:Column(
+        children: [
+          SizedBox(height: 80,),
+           Row(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,        
+            children: [
+              Padding(padding: EdgeInsets.only(left: 17)),
+            
+              InkWell(
+                 onTap: () {
+                 Get.to(() => FoodCatagoryScreen(), transition: Transition.fade
+                 );
+               },
+    //back icon
+                child: Icon(IconData(0xf570, fontFamily: 'MaterialIcons')),
+              
+               ),
+          SizedBox(width: 300,),
+    //favorite icon
+              Icon(IconData(0xe958, fontFamily: 'MaterialIcons')),
+],),
+SizedBox(height: 20,),
+
+          Container(
+            height: 222,
+            width: double.infinity,
+            child: CusstomPageView(
+              pageController: pageController,
+            ),
+          ),
+SizedBox(height: 20,),
+    
+          CusstomIndicator(
+            dotsIndex: pageController!.hasClients?  pageController!.page:0,
+          ),
+         
+          
+          Center(
+              child: Column(
+    
+                children: const[
+                  SizedBox(height:20,),
+              Text('Smoked Salmon',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  ),
+               SizedBox(height:10,),
+              Text('15.00\$',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                  ),
+                  SizedBox(height:10,),
+    //add to cart button
+                  
+                ],
+              ),
+          ),
+          
+          Column(
+           crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height:10,),
+                 Container(
+                 // margin:const EdgeInsets.only(left: 15),
+                   child:const Text('Descrption',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                   
+                    ),
+                 ),
+                
+          
+                SizedBox(
+                  height:MediaQuery.of(context).size.height * .01,),
+                 Container(
+               //   margin:const EdgeInsets.only(left: 15),
+                  height: 150,
+                  width: 300,
+                   child:const Text('The best sweet dessertThe quality and craftsmanship is on full show. The waiters  signature white tunics are of loosely rumpled linen here versus the crisp whites of the city. The thick galleria walls of the restaurant s three distinct areas are cast in gentle neon so that even your worst wine-fuelled photos turn into atmospheric still lifes. The art, typically, lands a gut punch',
+                    style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.grey
+                             ),
+                   
+                    ),
+                 ),
+                
+              ],
+            ),
+            InkWell(
+                    onTap: () {
+                      Get.to(() => CartScreen(), transition: Transition.fade );
+                    },
+                    child: Container(
+                      width: 330,
+                      height: 48,
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(30),
+                      ),
+                      
+                      child: Center(
+                        child: Text('Add To Cart',
+                          style: TextStyle(
+                            color:  Color(0XFFFFFFFF),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          ),
+                      ),),
+                  )
+    
+    
+       
+        ],
+      ),
+    );
+  }
+}
