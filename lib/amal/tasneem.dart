@@ -2,59 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-class DataSearch extends StatefulWidget {
-  const DataSearch({Key? key}) : super(key: key);
-
-  @override
-  State<DataSearch> createState() => _DataSearchState();
-}
-
-class _DataSearchState extends State<DataSearch> {
-  Future getData() async {}
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(30),
-        width: double.infinity,
-        child: Column(
-          children: [
-            TextField(
-              onChanged: (val){},
-              onTap: (){
-                showSearch(
-                  context: context,
-                  delegate: Searchdel(),
-                );
-              },
-              decoration: InputDecoration(
-                filled: true,
-                hintText: 'Search',
-                labelStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600,
-                ),
-                prefixIcon: Icon(Icons.search, color: Colors.black),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFEFEEEE)),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-            ),
-            SizedBox(height: 2),
-          ],
-        ),
-      ),
-    );
-
-  }
-}
-
-/// itemNotFound page
 class itemNotFound extends StatelessWidget {
   const itemNotFound({Key? key}) : super(key: key);
 
@@ -69,8 +16,7 @@ class itemNotFound extends StatelessWidget {
             SizedBox(height: 40),
             Container(
               margin: EdgeInsets.fromLTRB(40, 16, 24, 60),
-              child:
-              Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -104,7 +50,8 @@ class itemNotFound extends StatelessWidget {
                   ),
                 ],
               ),
-            )],
+            )
+          ],
         ),
       ),
     );
@@ -113,7 +60,7 @@ class itemNotFound extends StatelessWidget {
 
 class Searchdel extends SearchDelegate<String> {
   CollectionReference _firebaseFirestore =
-  FirebaseFirestore.instance.collection("all");
+      FirebaseFirestore.instance.collection("all");
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -142,25 +89,23 @@ class Searchdel extends SearchDelegate<String> {
           );
         } else {
           if (snapshot.data!.docs
-              .where((QueryDocumentSnapshot<Object?> element) =>
-              element['name']
+              .where((QueryDocumentSnapshot<Object?> element) => element['name']
                   .toString()
                   .toLowerCase()
-                  .contains(query.toLowerCase())).isEmpty) {
+                  .contains(query.toLowerCase()))
+              .isEmpty) {
             return itemNotFound();
-          }
-          else {
+          } else {
             // fetch data here
             print(snapshot.data);
             return ListView(
               children: [
-
-                ...snapshot.data!.docs.where((
-                    QueryDocumentSnapshot<Object?> element) =>
-                    element['name']
-                        .toString()
-                        .toLowerCase()
-                        .contains(query.toLowerCase()))
+                ...snapshot.data!.docs
+                    .where((QueryDocumentSnapshot<Object?> element) =>
+                        element['name']
+                            .toString()
+                            .toLowerCase()
+                            .contains(query.toLowerCase()))
                     .map((QueryDocumentSnapshot<Object?> data) {
                   final String name = data.get('name');
                   final String image = data.get('image');
@@ -189,7 +134,6 @@ class Searchdel extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     // show when someone search for something
-    return Center(
-    );
+    return Center();
   }
 }

@@ -44,6 +44,8 @@ class _FoodListingBodyState extends State<FoodListingBody> {
       child: Scaffold(
         backgroundColor: Color(0xFFEDEDED),
         appBar: AppBar(
+          title: Text(food['food']?.category ?? ''),
+          centerTitle: true,
           backgroundColor: Colors.green,
           leading: InkWell(
             child: Icon(Icons.arrow_back_rounded),
@@ -54,15 +56,15 @@ class _FoodListingBodyState extends State<FoodListingBody> {
               );
             },
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: InkWell(
-                child: Icon(Icons.favorite_outline),
-                onTap: () {},
-              ),
-            )
-          ],
+          // actions: [
+          //   Padding(
+          //     padding: const EdgeInsets.all(10.0),
+          //     child: InkWell(
+          //       child: Icon(Icons.favorite_outline),
+          //       onTap: () {},
+          //     ),
+          //   )
+          // ],
         ),
         body: SafeArea(
           child: Padding(
@@ -76,7 +78,7 @@ class _FoodListingBodyState extends State<FoodListingBody> {
                     height: 240,
                     width: 200,
                     decoration: BoxDecoration(
-                    //  borderRadius: BorderRadius.all(Radius.circular(10)),
+                      //  borderRadius: BorderRadius.all(Radius.circular(10)),
                       image: DecorationImage(
                           image: NetworkImage(food['food']?.url ?? ''),
                           fit: BoxFit.fill),
@@ -103,7 +105,7 @@ class _FoodListingBodyState extends State<FoodListingBody> {
                           height: 10,
                         ),
                         Text(
-                          '${food['food']?.price ?? ''}',
+                          '${food['food']?.price ?? ''}\$',
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -150,7 +152,9 @@ class _FoodListingBodyState extends State<FoodListingBody> {
                       ),
                     ],
                   ),
-SizedBox(height: 15,),
+                  SizedBox(
+                    height: 15,
+                  ),
                   Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -159,14 +163,14 @@ SizedBox(height: 15,),
                         shadowColor: Colors.greenAccent,
                         elevation: 3,
                         shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32.0)),
+                            borderRadius: BorderRadius.circular(32.0)),
                         minimumSize: Size(320, 55),
                       ),
-                      child: Text('Add Item to Cart', 
-                      style: TextStyle(
-                        fontSize: 21,
-                        fontWeight:FontWeight.bold 
-                      ),),
+                      child: Text(
+                        'Add Item to Cart',
+                        style: TextStyle(
+                            fontSize: 21, fontWeight: FontWeight.bold),
+                      ),
                       onPressed: () {
                         // Get a reference to the Cart object using Provider
                         Cart cart = Provider.of<Cart>(context, listen: false);
@@ -175,8 +179,8 @@ SizedBox(height: 15,),
                           CartItem(
                             name: food['food']?.name ?? '',
                             imageUrl: food['food']?.url ?? '',
-                           // price: double.parse((food['food']?.price ?? '')),
-                           price: 15.0
+                            // price: double.parse((food['food']?.price ?? '')),
+                            price: double.parse(food['food']?.price ?? ''),
                           ),
                         );
                       },

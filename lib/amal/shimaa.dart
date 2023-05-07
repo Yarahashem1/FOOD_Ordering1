@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'componen/cart.dart';
 import 'componen/cart_item.dart';
 import 'componen/my_icon.dart';
+
 class CartPage extends StatelessWidget {
   const CartPage({key}) : super(key: key);
 
