@@ -1,17 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/admin/cashe.dart';
 import 'package:flutter_application_1/amal/amal.dart';
 import 'package:flutter_application_1/main.dart';
 
 import '../admin/adminHome.dart';
 import '../components_login/components.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyProfile());
-}
 
 class MyProfile extends StatefulWidget {
   @override
@@ -81,7 +76,7 @@ class _MyProfileState extends State<MyProfile> {
     });
     await FirebaseFirestore.instance
         .collection("users")
-        .doc(id ?? "123")
+        .doc(id)
         .get()
         .then((value) {
       setState(() {
@@ -117,10 +112,7 @@ class _MyProfileState extends State<MyProfile> {
     setState(() {
       _loading = true;
     });
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(id ?? "123")
-        .update({
+    await FirebaseFirestore.instance.collection("users").doc(id).update({
       "name": nameController.text,
       "location": locationController.text,
     }).then((value) async {
@@ -128,8 +120,16 @@ class _MyProfileState extends State<MyProfile> {
     });
   }
 
+  Future getIdSharedRefrance() async {
+    setState(() async {
+      uIdAdmin = await CacheHelper.getData(key: 'uIdAdmin') ?? "123";
+      uIdCustomer = await CacheHelper.getData(key: 'uIdCustomer') ?? "123";
+    });
+  }
+
   @override
   void initState() {
+    getIdSharedRefrance();
     getAccountInfo(uIdCustomer!);
 
     super.initState();
@@ -163,7 +163,11 @@ class _MyProfileState extends State<MyProfile> {
           color: Colors.white,
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, size: 25),
+          icon: const Icon(
+            Icons.arrow_back,
+            size: 25,
+            color: Colors.white,
+          ),
           onPressed: () {
             navigateAndFinish(
               context,
@@ -192,148 +196,146 @@ class _MyProfileState extends State<MyProfile> {
           : Padding(
               padding: const EdgeInsets.only(left: 25, top: 0),
               child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    //  aliggnment: Alignment.center,
-                    children: [
-                      // SizedBox(height: 20),
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: const BoxDecoration(
-                          color: Colors.grey,
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: AssetImage('images/pr.jpeg'),
-                              fit: BoxFit.cover),
-                        ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  //  aliggnment: Alignment.center,
+                  children: [
+                    // SizedBox(height: 20),
+                    Container(
+                      height: 60,
+                      width: 60,
+                      decoration: const BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage('images/pr.jpeg'),
+                            fit: BoxFit.cover),
                       ),
-                      SizedBox(height: 10),
+                    ),
+                    SizedBox(height: 10),
 
-                      Text(
-                        'My information',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.normal,
-                        ),
+                    Text(
+                      'My information',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.normal,
                       ),
-                      // centerTitle: false,
-                      SizedBox(height: 20),
-                      Card(
-                        margin: EdgeInsets.symmetric(horizontal: 30),
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: nameController,
-                            enabled: true,
-                            decoration: InputDecoration(
-                              labelText: 'Your Name :',
-                              labelStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: const EdgeInsets.all(8.0),
+                    ),
+                    // centerTitle: false,
+                    SizedBox(height: 20),
+                    Card(
+                      margin: EdgeInsets.symmetric(horizontal: 30),
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: nameController,
+                          enabled: true,
+                          decoration: InputDecoration(
+                            labelText: 'Your Name :',
+                            labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
                             ),
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 12,
-                              height: 0.8,
-                            ),
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.all(8.0),
+                          ),
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 12,
+                            height: 0.8,
                           ),
                         ),
                       ),
+                    ),
 
-                      SizedBox(height: 20),
-                      Card(
-                        margin: EdgeInsets.symmetric(horizontal: 30),
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: emailController,
-                            enabled: false,
-                            decoration: InputDecoration(
-                              labelText: 'Your Email :',
-                              labelStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: const EdgeInsets.all(8.0),
+                    SizedBox(height: 20),
+                    Card(
+                      margin: EdgeInsets.symmetric(horizontal: 30),
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: emailController,
+                          enabled: false,
+                          decoration: InputDecoration(
+                            labelText: 'Your Email :',
+                            labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
                             ),
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 12,
-                              height: 0.8,
-                            ),
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.all(8.0),
+                          ),
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 12,
+                            height: 0.8,
                           ),
                         ),
                       ),
+                    ),
 
-                      SizedBox(height: 20),
-                      Card(
-                        margin: EdgeInsets.symmetric(horizontal: 30),
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: locationController,
-                            enabled: true,
-                            decoration: InputDecoration(
-                              labelText: 'Location :',
-                              labelStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: const EdgeInsets.all(8.0),
+                    SizedBox(height: 20),
+                    Card(
+                      margin: EdgeInsets.symmetric(horizontal: 30),
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: locationController,
+                          enabled: true,
+                          decoration: InputDecoration(
+                            labelText: 'Location :',
+                            labelStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
                             ),
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 12,
-                              height: 0.8,
-                            ),
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.all(8.0),
+                          ),
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 12,
+                            height: 0.8,
                           ),
                         ),
                       ),
+                    ),
 
-                      SizedBox(height: 40),
-                      GestureDetector(
-                        onTap: () {
-                          updateUserAccount(uIdCustomer!);
-                        },
-                        child: Container(
-                          width: 315,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Update',
-                              style: const TextStyle(
-                                color: Color(0XFFFFFFFF),
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                    SizedBox(height: 40),
+                    GestureDetector(
+                      onTap: () {
+                        updateUserAccount(uIdCustomer!);
+                      },
+                      child: Container(
+                        width: 315,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Update',
+                            style: const TextStyle(
+                              color: Color(0XFFFFFFFF),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
