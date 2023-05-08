@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_1/amal/amal.dart';
+import 'package:flutter_application_1/amal/shimaa2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import '../components_login/components.dart';
 import 'componen/cart.dart';
 import 'componen/cart_item.dart';
 import 'componen/my_icon.dart';
@@ -14,7 +13,21 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Cart Page')),
+      appBar: AppBar(
+          title: Text('Cart Page'),
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 25,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              navigateAndFinish(
+                context,
+                Category(),
+              );
+            },
+          )),
       body: Consumer<Cart>(
         builder: (context, cart, child) {
           return Column(
@@ -102,52 +115,23 @@ class CartPage extends StatelessWidget {
                   children: [
                     Text('Total: \$${cart.getTotal().toStringAsFixed(2)}'),
                     ElevatedButton(
-                      onPressed: () async {
-                        String userId = FirebaseAuth.instance.currentUser!.uid;
-                        DocumentSnapshot userSnapshot = await FirebaseFirestore
-                            .instance
-                            .collection('users')
-                            .doc(userId)
-                            .get();
-
-                        CollectionReference cartCollection =
-                            FirebaseFirestore.instance.collection('Cart');
-
-                        Map<String, dynamic> userData =
-                            userSnapshot.data() as Map<String, dynamic>;
-                        String userName = userData['name'];
-                        String userLocation = userData['location'];
-                        String userEmail = userData['email'];
-
-                        String orderDetails = '';
-                        for (int i = 0; i < cart.items.length; i++) {
-                          final item = cart.items[i];
-                          orderDetails += '${item.name} (${item.quantity}) \n';
-                        }
-
-                        // Generate a unique order ID using a Timestamp
-                        Timestamp timestamp = Timestamp.now();
-                        String orderId =
-                            'Order-${timestamp.seconds}-${timestamp.nanoseconds}';
-
-                        Map<String, dynamic> orderData = {
-                          'orderId': orderId, // Add orderId field
-                          'order': orderDetails,
-                          'totalPrice': cart.getTotal().toStringAsFixed(2),
-                          'userName': userName,
-                          'userLocation': userLocation,
-                          'userEmail': userEmail,
-                        };
-
-                        try {
-                          await cartCollection.add(orderData);
-                          print('Order added to Firestore');
-                          cart.clearCart();
-                        } catch (error) {
-                          print('Failed to add order: $error');
+                      onPressed: () {
+                        if ((cart.getTotal()) != 0) {
+                          navigateAndFinish(
+                            context,
+                            ConfirmInformationPage(),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  "You haven't order yet !"),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
                         }
                       },
-                      child: Text('Order Now'),
+                      child: Text('Finish and Order'),
                     ),
                   ],
                 ),
