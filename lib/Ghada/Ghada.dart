@@ -120,19 +120,20 @@ class _MyProfileState extends State<MyProfile> {
     });
   }
 
-  Future getIdSharedRefrance() async {
-    setState(() async {
-      uIdAdmin = await CacheHelper.getData(key: 'uIdAdmin') ?? "123";
-      uIdCustomer = await CacheHelper.getData(key: 'uIdCustomer') ?? "123";
-    });
+  Future<void> getIdSharedRefrance() async {
+    uIdAdmin = await CacheHelper.getData(key: 'uIdAdmin') ?? "123";
+    uIdCustomer = await CacheHelper.getData(key: 'uIdCustomer') ?? "123";
   }
 
   @override
   void initState() {
-    getIdSharedRefrance();
-    getAccountInfo(uIdCustomer!);
-
     super.initState();
+    getIdSharedRefrance().then((_) {
+      if (uIdCustomer != null) {
+        getAccountInfo(uIdCustomer!);
+      }
+    });
+    userInfo = [];
   }
 
   @override
