@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_application_1/app_screens/widget/Food.dart';
 import 'listing.dart';
 import '../components_login/components.dart';
 
@@ -33,6 +34,7 @@ Future deleteFavourite(int i) async {
 }
 
 class _favoriteState extends State< favorite> {
+    String listingRoute = '/listing_screen';
   @override
   Widget build(BuildContext context) {
     final PageController controller = PageController();
@@ -43,7 +45,7 @@ class _favoriteState extends State< favorite> {
             child: Scaffold(
               appBar:  AppBar(
                 backgroundColor: Colors.green,
-                title: Text("Favorite Screen",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white),),
+                title: Text("Favorite Screen",style: TextStyle(fontSize: 25,color: Colors.white),),
                 leading: InkWell(
                   child: Icon(Icons.arrow_back_rounded),
                   onTap: () {
@@ -98,11 +100,19 @@ class _favoriteState extends State< favorite> {
                                         children: [
                                           InkWell(
                                             onTap: () async {
-
-                                              navigateAndFinish(
-                                                context,
-                                                FoodListingBody(),
-                                              );
+                                            navigateAndFinishRoute(
+                                              context,
+                                              widget,
+                                              listingRoute,
+                                              Food(
+                                                name: itemss[index]['name'],
+                                                category: itemss[index]
+                                                    ['category'],
+                                                description: itemss[index]
+                                                    ['description'],
+                                                price: itemss[index]['price'],
+                                                url: itemss[index]['images'],
+                                              ));
                                             },
                                             child: Image.network(
                                               itemss[index]['images'],

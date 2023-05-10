@@ -50,10 +50,8 @@ class _FoodListingBodyState extends State<FoodListingBody> {
           leading: InkWell(
             child: Icon(Icons.arrow_back_rounded),
             onTap: () {
-              navigateAndFinish(
-                context,
-                Category(),
-              );
+               Navigator.pop(context, true);
+              
             },
           ),
           // actions: [

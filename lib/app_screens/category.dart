@@ -53,7 +53,9 @@ class _CategoryState extends State<Category> {
       "name": items[i]['name'],
       "price": items[i]['price'],
       "images": items[i]['url'],
-      "uid": items[i]['uid']
+      "uid": items[i]['uid'],
+      "description": items[i]['description'],
+      "category": items[i]['category'],
     }).then((value) {
       print("Added to favourite");
     });
