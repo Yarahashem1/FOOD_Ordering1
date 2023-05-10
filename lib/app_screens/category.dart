@@ -2,15 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/amal/componen/item_widget.dart';
-import 'package:flutter_application_1/amal/componen/my_icon.dart';
+import 'package:flutter_application_1/app_screens/componen/item_widget.dart';
+import 'package:flutter_application_1/app_screens/componen/my_icon.dart';
 import 'package:flutter_application_1/components_login/components.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../Ghada/Ghada.dart';
-import '../amany/Screens/widget/Food.dart';
-import '../favorite/favorite.dart';
-import 'shimaa.dart';
-import 'tasneem.dart';
+import 'usersProfile.dart';
+import 'widget/Food.dart';
+import 'favorite.dart';
+import 'cart1.dart';
+import 'search.dart';
 
 class Category extends StatefulWidget {
   const Category({Key? key}) : super(key: key);

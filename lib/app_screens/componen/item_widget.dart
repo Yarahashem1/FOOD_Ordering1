@@ -3,7 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../amany/Screens/listing.dart';
+import '../listing.dart';
 import '../../components_login/components.dart';
 import 'my_icon.dart';
 

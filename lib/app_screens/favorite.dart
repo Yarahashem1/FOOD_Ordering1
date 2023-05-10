@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import '../amany/Screens/listing.dart';
+import 'listing.dart';
 import '../components_login/components.dart';
 
 class  favorite extends StatefulWidget {

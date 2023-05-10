@@ -1,12 +1,12 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/amany/Screens/widget/Food.dart';
+import 'package:flutter_application_1/app_screens/widget/Food.dart';
 import 'package:provider/provider.dart';
-import '../../amal/amal.dart';
-import '../../amal/componen/cart.dart';
-import '../../amal/componen/cart_item.dart';
-import '../../amal/shimaa.dart';
-import '../../components_login/components.dart';
+import 'category.dart';
+import 'componen/cart.dart';
+import 'componen/cart_item.dart';
+import 'cart1.dart';
+import '../components_login/components.dart';
 
 import 'widget/cusstom-indicator.dart';
 import 'widget/cusstom-page-view.dart';

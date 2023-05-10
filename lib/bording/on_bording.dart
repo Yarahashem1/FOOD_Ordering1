@@ -4,10 +4,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../amany/Screens/widget/cusstom-indicator.dart';
-import '../amany/Screens/widget/cusstom-page-view.dart';
-import '../amany/Screens/widget/cusstom_button.dart';
+import '../app_screens/widget/cusstom-indicator.dart';
+import '../app_screens/widget/cusstom-page-view.dart';
+import '../app_screens/widget/cusstom_button.dart';
 import '../login/login.dart';
+
+
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);

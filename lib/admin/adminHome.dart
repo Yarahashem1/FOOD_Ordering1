@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/admin/ProductView.dart';
+import 'package:flutter_application_1/admin/viewproduct/ProductView.dart';
 import 'package:flutter_application_1/admin/user_profile/user.dart';
-import '../amal/componen/elevated.dart';
+import '../app_screens/componen/elevated.dart';
 import '../components_login/components.dart';
-import 'addFood.dart';
+import 'cubitAddFood/addFood.dart';
 import 'user_profile/adminProfile.dart';
 import 'vieworder/view_order.dart';
 

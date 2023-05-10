@@ -1,5 +1,5 @@
-import 'package:flutter_application_1/amal/amal.dart';
-import 'package:flutter_application_1/amal/shimaa2.dart';
+import 'package:flutter_application_1/app_screens/category.dart';
+import 'package:flutter_application_1/app_screens/cart2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components_login/components.dart';

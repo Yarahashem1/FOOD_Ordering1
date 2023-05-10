@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/admin/cashe.dart';
-import 'package:flutter_application_1/amal/amal.dart';
+import 'package:flutter_application_1/cashe.dart';
+import 'package:flutter_application_1/app_screens/category.dart';
 import 'package:flutter_application_1/main.dart';
 
 import '../admin/adminHome.dart';

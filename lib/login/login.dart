@@ -13,8 +13,8 @@ import 'package:flutter_application_1/login/forget_password.dart';
 import 'package:flutter_application_1/register/register.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../admin/cashe.dart';
-import '../amal/amal.dart';
+import '../cashe.dart';
+import '../app_screens/category.dart';
 
 class SocialLoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();

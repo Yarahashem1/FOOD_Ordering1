@@ -1,16 +1,16 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/admin/addFood.dart';
-import 'package:flutter_application_1/amal/amal.dart';
+import 'package:flutter_application_1/admin/cubitAddFood/addFood.dart';
+import 'package:flutter_application_1/app_screens/category.dart';
 import 'package:flutter_application_1/login/login.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'admin/adminHome.dart';
-import 'admin/cashe.dart';
-import 'amal/componen/cart.dart';
-import 'amany/Screens/listing.dart';
+import 'cashe.dart';
+import 'app_screens/componen/cart.dart';
+import 'app_screens/listing.dart';
 import 'bording/on_bording.dart';
 import 'cubit/cubit.dart';
 import 'cubit/states.dart';
