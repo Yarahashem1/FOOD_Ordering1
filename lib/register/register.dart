@@ -30,9 +30,9 @@ class SocialRegisterScreen extends StatelessWidget {
                 SocialLoginScreen(),
               );
           }
-          if (state is SocialCreateUserErrorState) {
+          if (state is SocialRegisterErrorState) {
             showToast(
-                text: 'Email is already exists or password is too short',
+                text: 'Email is already exists or Email is invalid',
                 state: ToastStates.ERROR
             );
           }
@@ -46,7 +46,9 @@ class SocialRegisterScreen extends StatelessWidget {
                   context,
                   SocialLoginScreen(),
                 );
-              },)),
+              },),
+              title: Text("Register"),
+              ),
             body: Center(
               child: SingleChildScrollView(
                 child: Padding(

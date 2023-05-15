@@ -9,10 +9,9 @@ class SocialLoginCubit extends Cubit<SocialLoginStates> {
   SocialLoginCubit() : super(SocialLoginInitialState());
 
   static SocialLoginCubit get(context) => BlocProvider.of(context);
-
+ var cred;
       googlesign () async{
-         final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
+         final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();      
                                   // Obtain the auth details from the request
                                   final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
@@ -25,6 +24,7 @@ class SocialLoginCubit extends Cubit<SocialLoginStates> {
                                   // Once signed in, return the UserCredential
                                   return await FirebaseAuth.instance.signInWithCredential(credential).then((value){
                                    // print("****************************************************");
+                                   cred=value.user!.email;
                                      emit(SocialLoginSuccessState(value.user!.uid));
                                   } )    .catchError((error)
                                   {

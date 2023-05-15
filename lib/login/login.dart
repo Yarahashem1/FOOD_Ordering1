@@ -12,6 +12,7 @@ import 'package:flutter_application_1/login/cubit/states.dart';
 import 'package:flutter_application_1/login/forget_password.dart';
 import 'package:flutter_application_1/register/register.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../cashe.dart';
 import '../app_screens/category.dart';
@@ -20,6 +21,7 @@ class SocialLoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  GoogleSignIn googleSignIn=GoogleSignIn(scopes: ['email']);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,11 @@ class SocialLoginScreen extends StatelessWidget {
           if(state is SocialLoginSuccessState)
           {
 
-             if(emailController.text=='ahmaad6220@gmail.com'){
+             if(
+              emailController.text=='ahmaad6220@gmail.com' || emailController.text=='Ahmaad6220@gmail.com'
+             ||SocialLoginCubit.get(context).cred== 'ahmaad6220@gmail.com'
+             
+             ){
                CacheHelper.saveData(
                  key: 'uIdAdmin',
                  value: state.uId,
@@ -147,7 +153,7 @@ class SocialLoginScreen extends StatelessWidget {
                         ),
                       
 
-                             SizedBox(
+                           /*  SizedBox(
                           height: 30.0,
                         ),
                              Container(
@@ -165,15 +171,15 @@ class SocialLoginScreen extends StatelessWidget {
                                    Center(
                                      child: defaultTextButton(
                                       function: () async{
-                                        await SocialLoginCubit.get(context).googlesign();
-                                       
+                                        //await SocialLoginCubit.get(context).googlesign();
+                                     final GoogleSignInAccount? googleAcount=  await googleSignIn.signIn();
                             },
                                       text: 'Continue with Google',
                             ),
                                    ),
                                  ],
                                ),
-                             ),
+                             ),*/
                              
                         SizedBox(
                           height: 15.0,
