@@ -41,12 +41,14 @@ class AddFood extends StatelessWidget {
            var profileImage = AddFoodCubit.get(context).profileImage;
           return Scaffold(
             backgroundColor: Colors.white,
-            appBar: AppBar(leading: IconButton(icon: Icon(Icons.arrow_back_ios,size: 25,color: Colors.black,),
+            appBar: AppBar(leading: IconButton(icon: Icon(Icons.arrow_back_ios,size: 25,color: Colors.white,),
             onPressed: (){
               navigateAndFinish(
                       context,
                       adminHome(),
-                    );},),backgroundColor: Colors.white,elevation: 0,),
+                    );},),
+                    title: Text("Add Food"),
+                    backgroundColor: Colors.green,),
             body: Center(
               child: SingleChildScrollView(
                 child: Padding(

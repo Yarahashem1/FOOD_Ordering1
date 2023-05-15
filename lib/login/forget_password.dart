@@ -10,13 +10,16 @@ class forget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(leading: IconButton(icon: Icon(Icons.arrow_forward_ios),
+      appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.arrow_forward_ios),
       onPressed: (){
           navigateAndFinish(
                 context,
                 SocialLoginScreen(),
               );
-      },)),
+      },),
+      title: Text("Forget Password"),
+      ),
       body:Center(
         child: 
         Padding(
@@ -35,7 +38,7 @@ class forget extends StatelessWidget {
                               prefix: Icons.email_outlined,
                             ),
                             SizedBox(
-                              height: 15.0,
+                              height: 30.0,
                             ),
                              
                             defaultButton(
@@ -44,7 +47,10 @@ class forget extends StatelessWidget {
                                   try{
                                        FirebaseAuth.instance.sendPasswordResetEmail(email: forgetpass)
                                        .then((value) => {
-                                        print('email sent'),
+                                        showToast(
+                                       text: 'Email sent',
+                                      state: ToastStates.SUCCESS,
+                                               )
                                          
                                        });
                                   }on FirebaseAuthException catch(e){

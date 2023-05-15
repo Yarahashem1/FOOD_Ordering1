@@ -45,7 +45,7 @@ class _favoriteState extends State< favorite> {
             child: Scaffold(
               appBar:  AppBar(
                 backgroundColor: Colors.green,
-                title: Text("Favorite Screen",style: TextStyle(fontSize: 25,color: Colors.white),),
+                title: Text("Favorite"),
                 leading: InkWell(
                   child: Icon(Icons.arrow_back_rounded),
                   onTap: () {
@@ -71,13 +71,11 @@ class _favoriteState extends State< favorite> {
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
                               if (snapshot.hasData) {
                                 itemss = snapshot.data!.docs;
-                                return GridView.builder(
+                                return 
+                                ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: itemss.length,
-                                  gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                  ),
+                                 
                                   itemBuilder: (BuildContext context, int index) {
                                     // Build each item here
                                     return Container(
@@ -96,8 +94,11 @@ class _favoriteState extends State< favorite> {
                                           ),
                                         ],
                                       ),
-                                      child: Column(
+                                      child: 
+                                      Row(
+                                           crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
+                                      
                                           InkWell(
                                             onTap: () async {
                                             navigateAndFinishRoute(
@@ -127,7 +128,9 @@ class _favoriteState extends State< favorite> {
                                             ),
                                           ),
                                           SizedBox(width: 20,),
-                                          Column(children: [ Padding(
+                                          Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [ Padding(
                                             padding:
                                             EdgeInsets.only(bottom: 4, top: 10),
                                             child: Container(
@@ -154,7 +157,7 @@ class _favoriteState extends State< favorite> {
                                                           fontWeight:
                                                           FontWeight.w600),
                                                     ),
-                                                    SizedBox(width: 30,),
+                                                    SizedBox(width: 150,),
 
                                                     StreamBuilder(
                                                       stream: FirebaseFirestore.instance.collection("favorite").doc(FirebaseAuth.instance.currentUser!.email)
@@ -197,9 +200,11 @@ class _favoriteState extends State< favorite> {
                                             ),
                                           ],)  ],
                                       ),
+                                    
                                     );
                                   },
                                 );
+                             
                               }
                               return Center(
                                 child: CircularProgressIndicator(
