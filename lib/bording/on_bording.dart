@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,18 +16,16 @@ class OnBoarding extends StatefulWidget {
 }
 
 class _OnBoardingState extends State<OnBoarding> {
-  PageController? pageController;
+   PageController? pageController = PageController(initialPage: 0);
+  int? curruntPage = 0;
 
-  @override
-  void initState() {
-    pageController = PageController(initialPage: 0)
-      ..addListener(() {
-        setState(() {});
-      });
 
-    super.initState();
+  setCurrentPage(int value) {
+    this.curruntPage = value;
+    setState(() {});
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -40,7 +35,7 @@ class _OnBoardingState extends State<OnBoarding> {
         child: Column(
           children: [
            
-SizedBox(height: 80,),
+const SizedBox(height: 80,),
 
 
  
@@ -50,29 +45,32 @@ SizedBox(height: 80,),
            width: double.infinity,
             child:  CusstomPageView(
               pageController: pageController,
+              onChange: setCurrentPage,
+
             ),
           ),
 
                 SizedBox( height: 20,),
 
           CusstomIndicator(
-              dotsIndex: pageController!.hasClients? pageController?.page : 0,
+              dotsIndex: double.tryParse(curruntPage.toString()),
             ),
 
-            SizedBox(height: 80, ),
+         const SizedBox(height: 80, ),
           
           Container(
-            padding: EdgeInsets.only(left: 26, right: 16),
+            padding: const EdgeInsets.only(left: 26, right: 16),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Visibility(
-                    visible: pageController!.hasClients? (pageController?.page == 2? false : true ) :true  ,
+                    visible: curruntPage == 2 ? false : true,
                     child:InkWell(
                       onTap:(){
                          Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SocialLoginScreen()),
+                          MaterialPageRoute(
+                            builder: (context) => SocialLoginScreen()),
                         );
                       } ,
                       child: const Text('skip',
@@ -84,20 +82,24 @@ SizedBox(height: 80,),
                     ),
                   ),
                   Cusstom_Button(
+                      backgroundColor: Colors.green,
+                    textColor: Colors.white,
+                    text: curruntPage == 2 ? 'Get Started' : 'Next',
+                    buttonWidth: curruntPage == 2 ? 350 : 171,
+                    buttonHieght: curruntPage == 2 ? 58 : 48,
                     onTap: () {
-                      if(pageController!.page! < 2){
-                        pageController?.nextPage(duration: Duration(microseconds: 0),
-                         curve: Curves.ease);
-                      }else{
-                         Navigator.push(
+                      if (curruntPage == 2) {
+                        Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SocialLoginScreen()),
+                          MaterialPageRoute(
+                              builder: (context) => SocialLoginScreen()),
                         );
+                      } else {
+                        pageController?.nextPage(
+                            duration: const Duration(microseconds: 500),
+                            curve: Curves.ease);
                       }
                     },
-                    text:pageController!.hasClients? (pageController?.page == 2? 'Get Started' : 'Next') : 'Next' ,
-                    buttonWidth:pageController!.hasClients? (pageController?.page == 2? 300 : 171): 0 ,
-                    buttonHieght:pageController!.hasClients?( pageController?.page == 2? 58 : 48 ): 0 ,
                   )
           
                 ],
