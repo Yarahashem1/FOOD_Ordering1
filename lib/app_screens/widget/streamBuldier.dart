@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../components_login/components.dart';
+import '../componen/fav.dart';
 import '../widget/Food.dart';
 
 class StreamBuldierWidget extends StatefulWidget {
@@ -19,44 +20,7 @@ class StreamBuldierWidget extends StatefulWidget {
 class _StreamBuldierWidgetState extends State<StreamBuldierWidget> {
   List<dynamic> items = [];
   String listingRoute = '/listing_screen';
-  Future deleteFavourite1(int i) async {
-    return await FirebaseFirestore.instance
-        .collection('favorite')
-        .doc(FirebaseAuth.instance.currentUser!
-            .email) // replace with the actual document ID of the user
-        .collection('items')
-        .where('name',
-            isEqualTo: items[i]
-                ['name']) // replace with the actual name of the item
-        .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        doc.reference.delete();
-
-        // delete the document reference
-      });
-    });
-  }
-
-  Future addToFavourite(int i) async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    var currentUser = _auth.currentUser;
-    CollectionReference _collectionRef =
-        FirebaseFirestore.instance.collection("favorite");
-    return await _collectionRef
-        .doc(currentUser!.email)
-        .collection("items")
-        .doc()
-        .set({
-      "name": items[i]['name'],
-      "price": '${items[i]['price']}\$',
-      "images": items[i]['url'],
-      "uid": items[i]['uid']
-    }).then((value) {
-      print("Added to favourite");
-    });
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -172,8 +136,8 @@ class _StreamBuldierWidgetState extends State<StreamBuldierWidget> {
                                     child: IconButton(
                                       onPressed: () {
                                         snapshot.data.docs.length == 0
-                                            ? addToFavourite(index)
-                                            : deleteFavourite1(index);
+                                            ? addToFavourite(index,items)
+                                            : deleteFavourite(index,items);
                                       },
                                       icon: snapshot.data.docs.length == 0
                                           ? Icon(
