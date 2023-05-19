@@ -1,30 +1,48 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app_screens/category.dart';
+import 'package:flutter_application_1/login/cubit/cubit.dart';
+import 'package:flutter_application_1/login/login1.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-import 'package:flutter_application_1/main.dart';
+Future<void> main() async {
 
-void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('Social Login Screen', () {
+    late SocialLoginCubit cubit;
+    final testEmail = 'lolos@gmail.com';
+    final testPassword = 'lolo@123456';
+    setUp(() {
+      cubit = SocialLoginCubit();
+    });
+    setUpAll(() => () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      await Firebase.initializeApp();
+    });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    testWidgets('Email and Password field validation', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: BlocProvider<SocialLoginCubit>.value(
+            value: cubit,
+            child: SocialLoginScreen(),
+          ),
+          // Add routes for navigation
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+        ),
+      );
+      final emailField = find.byKey(ValueKey('emailField'));
+      final passwordField = find.byKey(ValueKey('passwordField'));
+      final loginButton = find.byKey(ValueKey('loginButton'));
+      await tester.enterText(emailField, testEmail);
+      await tester.enterText(passwordField, testPassword);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      // Tap login button
+      await tester.tap(loginButton);
+      await tester.pumpAndSettle(); // Wait for navigation to complete
+
+      // Verify navigation to CategoryScreen
+      expect(find.byType(Category), findsOneWidget);
+    });
   });
 }

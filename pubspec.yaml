@@ -44,16 +44,18 @@ dependencies:
   image_picker:
   dots_indicator:
   provider: 
-
+  cached_network_image:
   # firebase
   firebase_auth: 
   firebase_core: 
   cloud_firestore: 
   firebase_storage:
   shared_preferences:
+  test:
 
 dev_dependencies:
-  flutter_test:
+  flutter_driver:
+  
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to

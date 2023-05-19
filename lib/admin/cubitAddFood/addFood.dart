@@ -1,10 +1,8 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/admin/adminHome.dart';
 import 'package:flutter_application_1/admin/cubitAddFood/cubit.dart';
 import 'package:flutter_application_1/admin/cubitAddFood/statesAddFood.dart';
-import 'package:flutter_application_1/components_login/components.dart';
+import 'package:flutter_application_1/components_login/components1.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
@@ -59,6 +57,7 @@ class AddFood extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         defaultFormField2(
+                          key: ValueKey('foodname'),
                           controller: nameController,
                           isClickable: true,
                           type: TextInputType.name,
@@ -73,6 +72,7 @@ class AddFood extends StatelessWidget {
                           height: 15.0,
                         ),
                         defaultFormField2(
+                           key: ValueKey('foodprice'),
                           controller: priceController,
                           isClickable: true,
                           type: TextInputType.number,
@@ -88,6 +88,7 @@ class AddFood extends StatelessWidget {
                         ),
                         
                         defaultFormField2(
+                           key: ValueKey('fooddescription'),
                           controller: descriptionController,
                           isClickable: true,
                           type: TextInputType.multiline,
@@ -110,6 +111,7 @@ class AddFood extends StatelessWidget {
                                   ),
                             if (profileImage == null)
                                defaultFormField2(
+                               
                           controller: imageController,
                           isClickable:false,
                           type: TextInputType.multiline,
@@ -140,6 +142,7 @@ class AddFood extends StatelessWidget {
                             SizedBox(height: 15,),
 
                             IconButton(
+                                  key: ValueKey('image'),
                               icon: const CircleAvatar(
                                 radius: 20.0,
                                 child: Icon(
@@ -164,10 +167,12 @@ class AddFood extends StatelessWidget {
                                    
                                     color: Colors.white70),
                         child: DropdownButton<String>(
+                          
                           value: dropdownValue,
                           items: <String>['Meals', 'Snacks', 'Drinks','Shandwish']
                               .map<DropdownMenuItem<String>>((String item) {
                             return DropdownMenuItem<String>(
+                               key: ValueKey('catego'),
                               value: item,
                               child: Text(
                                 item,
@@ -190,6 +195,7 @@ class AddFood extends StatelessWidget {
                           height: 15.0,
                         ),
                          defaultButton(
+                           key: ValueKey('addfood'),
                             function: () async{
                               String uid = AddFoodCubit.get(context).generateRandomString();
                               var cubit = AddFoodCubit.get(context);

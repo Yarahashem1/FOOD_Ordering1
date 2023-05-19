@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class MyElevatedButton extends StatefulWidget {
   final String text;
   final Function onPressed;
+   dynamic keyy;
 
-  MyElevatedButton({required this.text, required this.onPressed});
+  MyElevatedButton({required this.text, required this.onPressed,this.keyy});
 
   @override
   _MyElevatedButtonState createState() => _MyElevatedButtonState();
@@ -22,6 +23,7 @@ class _MyElevatedButtonState extends State<MyElevatedButton> {
         width: double.infinity,
         height: 55,
         child: ElevatedButton(
+          key:widget.keyy,
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
                 _isSelected ? Colors.green : Colors.green),

@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_application_1/app_screens/widget/Food.dart';
-import 'listing.dart';
+import 'componen/fav.dart';
 import '../components_login/components.dart';
 
 class  favorite extends StatefulWidget {
@@ -16,22 +13,7 @@ class  favorite extends StatefulWidget {
 }
 
 List<dynamic> itemss = [];
-Future deleteFavourite(int i) async {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  var currentUser = _auth.currentUser;
-  CollectionReference _collectionRef =
-  FirebaseFirestore.instance.collection("favorite");
-  return FirebaseFirestore.instance.collection('favorite')
-      .doc(FirebaseAuth.instance.currentUser!.email) // replace with the actual document ID of the user
-      .collection('items')
-      .where('name', isEqualTo:itemss[i]['name'] ) // replace with the actual name of the item
-      .get()
-      .then((querySnapshot) {
-    querySnapshot.docs.forEach((doc) {
-      doc.reference.delete(); // delete the document reference
-    });
-  });
-}
+
 
 class _favoriteState extends State< favorite> {
     String listingRoute = '/listing_screen';
@@ -47,6 +29,7 @@ class _favoriteState extends State< favorite> {
                 backgroundColor: Colors.green,
                 title: Text("Favorite"),
                 leading: InkWell(
+                  key: ValueKey("back"),
                   child: Icon(Icons.arrow_back_rounded),
                   onTap: () {
                     Navigator.pop(context);
@@ -100,8 +83,9 @@ class _favoriteState extends State< favorite> {
                                         children: [
                                       
                                           InkWell(
-                                            onTap: () async {
-                                            navigateAndFinishRoute(
+                                            key:ValueKey('navigate'),
+                                            onTap: ()  async{
+                                             navigateAndFinishRoute(
                                               context,
                                               widget,
                                               listingRoute,
@@ -171,11 +155,12 @@ class _favoriteState extends State< favorite> {
                                                           child: CircleAvatar(
                                                             backgroundColor: Colors.green,
                                                             child: IconButton(
+                                                               key:ValueKey('delfav'),
                                                               onPressed: () {
                                                                 FirebaseFirestore.instance.collection("favorite").doc(FirebaseAuth.instance.currentUser!.email)
                                                                     .collection("items").where("name",isEqualTo: itemss[index]['name']).get().
                                                                 then((value) {
-                                                                  snapshot.data.docs.length!=0?deleteFavourite(index):print("Already Added");
+                                                                  snapshot.data.docs.length!=0?deleteFavourite(index,itemss):print("Already Added");
                                                                 } );
                                                               },
                                                               icon: snapshot.data.docs.length==0? Icon(
