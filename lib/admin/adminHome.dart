@@ -45,6 +45,7 @@ class _adminHomeState extends State<adminHome> {
                 },
               ),
               MyElevatedButton(
+                  keyy: ValueKey('but'),
                 text: 'Add Products',
                 onPressed: () {
                   navigateTo(context, AddFood());
