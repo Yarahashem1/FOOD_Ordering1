@@ -35,11 +35,12 @@ class _OrderPageState extends State<ViewOrder> {
   Widget build(BuildContext context) {
     int orderNumber = 1;
     return Scaffold(
+      backgroundColor: Color(0xFFEDEDED),
       appBar: AppBar(
         title: const Text('View Order'),
         backgroundColor: Colors.green,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, size: 25),
+          icon: const Icon(Icons.arrow_back_ios, size: 25),
           onPressed: () {
             navigateAndFinish(
               context,
@@ -62,8 +63,8 @@ class _OrderPageState extends State<ViewOrder> {
           }
 
           return Padding(
-            padding: const EdgeInsets.only(
-                top: 15, left: 10, right: 10, bottom: 10),
+            padding:
+                const EdgeInsets.only(top: 15, left: 10, right: 10, bottom: 10),
             child: ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (BuildContext context, int index) {
@@ -71,7 +72,7 @@ class _OrderPageState extends State<ViewOrder> {
                   padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    color: Colors.grey[400],
+                    color: Colors.grey[300],
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -105,7 +106,10 @@ class _OrderPageState extends State<ViewOrder> {
                                 );
 
                                 if (confirmDelete == true) {
-                                  await stor.collection('Cart').doc(data[index].key).delete();
+                                  await stor
+                                      .collection('Cart')
+                                      .doc(data[index].key)
+                                      .delete();
                                   setState(() {
                                     data.removeAt(index);
                                   });
@@ -124,36 +128,31 @@ class _OrderPageState extends State<ViewOrder> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                'The customer name : ${snapshot.data![index]
-                                    .userName}'),
+                                'The customer name : ${snapshot.data![index].userName}'),
                             const Divider(
                               indent: 2,
                               endIndent: 2,
                             ),
                             Text(
-                                'The customer email : ${snapshot.data![index]
-                                    .userEmail}'),
+                                'The customer email : ${snapshot.data![index].userEmail}'),
                             const Divider(
                               indent: 2,
                               endIndent: 2,
                             ),
                             Text(
-                                'The customer address : ${snapshot
-                                    .data![index].userLocation}'),
+                                'The customer address : ${snapshot.data![index].userLocation}'),
                             const Divider(
                               indent: 2,
                               endIndent: 2,
                             ),
                             Text(
-                                'The Total Price : ${snapshot.data![index]
-                                    .totalPrice}'),
+                                'The Total Price : ${snapshot.data![index].totalPrice}'),
                             const Divider(
                               indent: 2,
                               endIndent: 2,
                             ),
                             Text(
-                                'The customer Phone : ${snapshot.data![index]
-                                    .userPhone}'),
+                                'The customer Phone : ${snapshot.data![index].userPhone}'),
                           ],
                         ),
                       ],

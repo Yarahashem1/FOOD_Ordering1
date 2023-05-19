@@ -3,8 +3,6 @@ import 'package:flutter_application_1/admin/adminHome.dart';
 
 import '../../components_login/components.dart';
 
-
-
 void main() {
   runApp(const Profile());
 }
@@ -26,24 +24,26 @@ class Profile extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context, true);
+                Navigator.pop(context, false);
               },
               child: Text(
-                'Confirm',
+                'Cancel',
                 style: TextStyle(
-                  color: Colors.red,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w600,
                   fontStyle: FontStyle.normal,
                 ),
               ),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context, false);
+                Navigator.pop(context, true);
               },
               child: Text(
-                'Cancel',
+                'Confirm',
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Colors.green,
+                  fontWeight: FontWeight.w600,
                   fontStyle: FontStyle.normal,
                 ),
               ),
@@ -62,6 +62,7 @@ class Profile extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Color(0xFFEDEDED),
         // extendBodyBehindAppBar: true,
         appBar: AppBar(
           actions: [
@@ -90,14 +91,18 @@ class Profile extends StatelessWidget {
             color: Colors.black,
           ),
           leading: IconButton(
-          icon: const Icon(Icons.arrow_back, size: 25),
-          onPressed: () {
-            navigateAndFinish(
-              context,
-              adminHome(),
-            );
-          },
-        ),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 25,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              navigateAndFinish(
+                context,
+                adminHome(),
+              );
+            },
+          ),
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),

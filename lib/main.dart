@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/admin/cubitAddFood/addFood.dart';
@@ -13,7 +12,7 @@ import 'app_screens/componen/cart.dart';
 import 'app_screens/listing.dart';
 import 'bording/on_bording.dart';
 import 'cubit/cubit.dart';
-import 'cubit/states.dart';
+
 String? uIdAdmin;
 String? uIdCustomer;
 void main() async {
@@ -23,17 +22,17 @@ void main() async {
   uIdAdmin = CacheHelper.getData(key: 'uIdAdmin');
   uIdCustomer = CacheHelper.getData(key: 'uIdCustomer');
   Widget widget;
-  if(uIdAdmin != null)
-  {
+  if (uIdAdmin != null) {
     widget = adminHome();
-  } else if(uIdCustomer != null) {
+  } else if (uIdCustomer != null) {
     widget = Category();
-  } else
-  {
+  } else {
     widget = OnBoarding();
   }
 
-  runApp(MyApp(startWidget: widget,));
+  runApp(MyApp(
+    startWidget: widget,
+  ));
 }
 
 class MyApp extends StatelessWidget {

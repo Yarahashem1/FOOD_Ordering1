@@ -6,13 +6,6 @@ import 'category.dart';
 import 'componen/cart.dart';
 import 'componen/cart_item.dart';
 import 'cart1.dart';
-import '../components_login/components.dart';
-
-import 'widget/cusstom-indicator.dart';
-import 'widget/cusstom-page-view.dart';
-
-import 'widget/cusstom-indicator.dart';
-import 'widget/cusstom-page-view.dart';
 
 class FoodListingBody extends StatefulWidget {
   const FoodListingBody({Key? key}) : super(key: key);
@@ -45,24 +38,13 @@ class _FoodListingBodyState extends State<FoodListingBody> {
         backgroundColor: Color(0xFFEDEDED),
         appBar: AppBar(
           title: Text(food['food']?.category ?? ''),
-          centerTitle: true,
           backgroundColor: Colors.green,
           leading: InkWell(
-            child: Icon(Icons.arrow_back_rounded),
+            child: Icon(Icons.arrow_back_ios),
             onTap: () {
-               Navigator.pop(context, true);
-              
+              Navigator.pop(context, true);
             },
           ),
-          // actions: [
-          //   Padding(
-          //     padding: const EdgeInsets.all(10.0),
-          //     child: InkWell(
-          //       child: Icon(Icons.favorite_outline),
-          //       onTap: () {},
-          //     ),
-          //   )
-          // ],
         ),
         body: SafeArea(
           child: Padding(

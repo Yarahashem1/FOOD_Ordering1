@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/cashe.dart';
 import 'package:flutter_application_1/app_screens/category.dart';
+import 'package:flutter_application_1/app_screens/widget/buttom_bar.dart';
 import 'package:flutter_application_1/main.dart';
-
-import '../admin/adminHome.dart';
+import '../cashe.dart';
 import '../components_login/components.dart';
 
 class MyProfile extends StatefulWidget {
@@ -19,6 +17,9 @@ class _MyProfileState extends State<MyProfile> {
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var locationController = TextEditingController();
+  late String userId;
+  late TextEditingController _nameTextController;
+  late TextEditingController _locationTextController;
 
   void _showLogoutConfirmDialog(BuildContext context) async {
     bool? result = await showDialog<bool>(
@@ -34,26 +35,26 @@ class _MyProfileState extends State<MyProfile> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context, true);
-              },
-              child: Text(
-                'Confirm',
-                style: TextStyle(
-                  color: Colors.red,
-                  fontStyle: FontStyle.normal,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
                 Navigator.pop(context, false);
               },
               child: Text(
                 'Cancel',
                 style: TextStyle(
-                  color: Colors.blue,
-                  fontStyle: FontStyle.normal,
-                ),
+                    color: Colors.grey,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: Text(
+                'Confirm',
+                style: TextStyle(
+                    color: Colors.green,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w600),
               ),
             ),
           ],
@@ -128,6 +129,8 @@ class _MyProfileState extends State<MyProfile> {
   @override
   void initState() {
     super.initState();
+    _nameTextController = TextEditingController();
+    _locationTextController = TextEditingController();
     getIdSharedRefrance().then((_) {
       if (uIdCustomer != null) {
         getAccountInfo(uIdCustomer!);
@@ -138,7 +141,8 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   void dispose() {
-    emailController.dispose();
+    _nameTextController.dispose();
+    _locationTextController.dispose();
     nameController.dispose();
     locationController.dispose();
     super.dispose();
@@ -157,7 +161,6 @@ class _MyProfileState extends State<MyProfile> {
             fontStyle: FontStyle.normal,
           ),
         ),
-        centerTitle: true,
         backgroundColor: Colors.green,
         elevation: 0,
         iconTheme: IconThemeData(
@@ -165,7 +168,7 @@ class _MyProfileState extends State<MyProfile> {
         ),
         leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios,
             size: 25,
             color: Colors.white,
           ),
@@ -195,7 +198,7 @@ class _MyProfileState extends State<MyProfile> {
               ),
             )
           : Padding(
-              padding: const EdgeInsets.only(left: 25, top: 0),
+              padding: const EdgeInsets.only(left: 25, top: 10),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -203,8 +206,8 @@ class _MyProfileState extends State<MyProfile> {
                   children: [
                     // SizedBox(height: 20),
                     Container(
-                      height: 60,
-                      width: 60,
+                      height: 80,
+                      width: 80,
                       decoration: const BoxDecoration(
                         color: Colors.grey,
                         shape: BoxShape.circle,
@@ -215,16 +218,6 @@ class _MyProfileState extends State<MyProfile> {
                     ),
                     SizedBox(height: 10),
 
-                    Text(
-                      'My information',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.normal,
-                      ),
-                    ),
-                    // centerTitle: false,
                     SizedBox(height: 20),
                     Card(
                       margin: EdgeInsets.symmetric(horizontal: 30),
@@ -313,8 +306,9 @@ class _MyProfileState extends State<MyProfile> {
                     ),
 
                     SizedBox(height: 40),
-                    GestureDetector(
-                      onTap: () {
+                    ElevatedButton(
+                      onPressed: () {
+                        _performMyProfile();
                         updateUserAccount(uIdCustomer!);
                       },
                       child: Container(
@@ -336,10 +330,44 @@ class _MyProfileState extends State<MyProfile> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 255),
+                      child: ButtomBar(),
+                    )
                   ],
                 ),
               ),
             ),
     );
+  }
+
+  void _performMyProfile() {
+    if (_checkData()) {
+      updateUserAccount(uIdCustomer!);
+    }
+  }
+
+  bool _checkData() {
+    if (_nameTextController.text.isNotEmpty &&
+        _locationTextController.text.isNotEmpty) {
+      return true;
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Enter required data',
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Colors.red,
+          elevation: 4,
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 1),
+          dismissDirection: DismissDirection.horizontal,
+        ),
+      );
+      return false;
+    }
   }
 }

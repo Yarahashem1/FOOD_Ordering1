@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
@@ -21,7 +20,7 @@ class SocialLoginScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
-  GoogleSignIn googleSignIn=GoogleSignIn(scopes: ['email']);
+  GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
 
   @override
   Widget build(BuildContext context) {
@@ -35,42 +34,35 @@ class SocialLoginScreen extends StatelessWidget {
               state: ToastStates.ERROR,
             );
           }
-          if(state is SocialLoginSuccessState)
-          {
-
-             if(
-              emailController.text=='ahmaad6220@gmail.com' || emailController.text=='Ahmaad6220@gmail.com'
-             ||SocialLoginCubit.get(context).cred== 'ahmaad6220@gmail.com'
-             
-             ){
-               CacheHelper.saveData(
-                 key: 'uIdAdmin',
-                 value: state.uId,
-               ).then((value)
-               {
-                 navigateTo(
-                   context,
-                   adminHome(),
-                 );
-               });
-             }
-             else {
-               CacheHelper.saveData(
-                 key: 'uIdCustomer',
-                 value: state.uId,
-               ).then((value)
-               {
-                 navigateTo(
-                   context,
-                   Category(),
-                 );
-               });
-             }
-            
+          if (state is SocialLoginSuccessState) {
+            if (emailController.text == 'ahmaad6220@gmail.com' ||
+                emailController.text == 'Ahmaad6220@gmail.com' ||
+                SocialLoginCubit.get(context).cred == 'ahmaad6220@gmail.com') {
+              CacheHelper.saveData(
+                key: 'uIdAdmin',
+                value: state.uId,
+              ).then((value) {
+                navigateTo(
+                  context,
+                  adminHome(),
+                );
+              });
+            } else {
+              CacheHelper.saveData(
+                key: 'uIdCustomer',
+                value: state.uId,
+              ).then((value) {
+                navigateTo(
+                  context,
+                  Category(),
+                );
+              });
+            }
           }
         },
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: Color(0xFFEDEDED),
             body: Center(
               child: SingleChildScrollView(
                 child: Padding(
@@ -80,8 +72,15 @@ class SocialLoginScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(child: Text("LOGIN",style: TextStyle(fontSize: 50,fontWeight:FontWeight.bold, ),)),
-                         SizedBox(
+                        Center(
+                            child: Text(
+                          "LOGIN",
+                          style: TextStyle(
+                            fontSize: 50,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
+                        SizedBox(
                           height: 18.0,
                         ),
                         defaultFormField(
@@ -102,9 +101,7 @@ class SocialLoginScreen extends StatelessWidget {
                           controller: passwordController,
                           type: TextInputType.visiblePassword,
                           suffix: SocialLoginCubit.get(context).suffix,
-                          onSubmit: (value) {
-
-                          },
+                          onSubmit: (value) {},
                           isPassword: SocialLoginCubit.get(context).isPassword,
                           suffixPressed: () {
                             SocialLoginCubit.get(context)
@@ -118,32 +115,31 @@ class SocialLoginScreen extends StatelessWidget {
                           label: 'Password',
                           prefix: Icons.lock_outline,
                         ),
-                          SizedBox(
+                        SizedBox(
                           height: 15.0,
                         ),
                         defaultTextButton(
-                              function: () {
-                                navigateTo(
-                                  context,
-                                 forget(),
-                                );
-                              },
-                              text: 'Forget password?',
-                            ),
+                          function: () {
+                            navigateTo(
+                              context,
+                              forget(),
+                            );
+                          },
+                          text: 'Forget password?',
+                        ),
                         SizedBox(
                           height: 30.0,
                         ),
                         ConditionalBuilder(
                           condition: state is! SocialLoginLoadingState,
                           builder: (context) => defaultButton(
-                            function: () async{
-                               if (formKey.currentState!.validate()) {
+                            function: () async {
+                              if (formKey.currentState!.validate()) {
                                 SocialLoginCubit.get(context).userLogin(
                                   email: emailController.text,
                                   password: passwordController.text,
                                 );
-                              }  
-                               
+                              }
                             },
                             text: 'login',
                             isUpperCase: true,
@@ -151,22 +147,21 @@ class SocialLoginScreen extends StatelessWidget {
                           fallback: (context) =>
                               Center(child: CircularProgressIndicator()),
                         ),
-                      
 
-                           /*  SizedBox(
+                        /*  SizedBox(
                           height: 30.0,
                         ),
                              Container(
-                             
+
                               color: Color.fromARGB(179, 245, 240, 240),
                                child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                  children: [
                                    CircleAvatar(
                             radius: 20,
-                           
+
                           backgroundImage: NetworkImage('https://play-lh.googleusercontent.com/6UgEjh8Xuts4nwdWzTnWH8QtLuHqRMUB7dp24JYVE2xcYzq4HA8hFfcAbU-R-PC_9uA1'),
-                       
+
                           ),
                                    Center(
                                      child: defaultTextButton(
@@ -180,7 +175,7 @@ class SocialLoginScreen extends StatelessWidget {
                                  ],
                                ),
                              ),*/
-                             
+
                         SizedBox(
                           height: 15.0,
                         ),
@@ -194,15 +189,14 @@ class SocialLoginScreen extends StatelessWidget {
                               function: () {
                                 navigateTo(
                                   context,
-                                 SocialRegisterScreen(),
+                                  SocialRegisterScreen(),
                                 );
                               },
                               text: 'register',
                             ),
                           ],
                         ),
-                       
-                  ],
+                      ],
                     ),
                   ),
                 ),
