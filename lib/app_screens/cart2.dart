@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/app_screens/category.dart';
 import 'package:flutter_application_1/app_screens/cart1.dart';
 import 'package:provider/provider.dart';
-
 import '../components_login/components.dart';
 import 'componen/cart.dart';
 
@@ -15,43 +14,69 @@ class ConfirmInformationPage extends StatefulWidget {
 
 class _ConfirmInformationPageState extends State<ConfirmInformationPage> {
   final _formKey = GlobalKey<FormState>();
-  String? _address ="Gaza Strip";
+  String? _address;
   String? _phone;
+  bool isOrderButtonEnabled = true;
 
   @override
   void initState() {
     super.initState();
     _fetchUserData();
-
   }
 
-void _fetchUserData() async {
-  final userDoc = await FirebaseFirestore.instance
-      .collection('users')
-      .doc(FirebaseAuth.instance.currentUser!.uid)
-      .get();
-  if (userDoc.exists) {
-    setState(() {
-      _address = userDoc.data()!['location'];
-    });
+  void _fetchUserData() async {
+    final userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .get();
+    if (userDoc.exists) {
+      setState(() {
+        _address = userDoc.data()!['location'];
+      });
+    }
   }
-}
+
+  Widget _buildAddressField() {
+    if (_address == null) {
+      return CircularProgressIndicator();
+    } else {
+      return TextFormField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Color.fromARGB(150, 255, 255, 255),
+          icon: Icon(Icons.location_pin),
+          hintText: 'Confirm your Address',
+          helperText: 'Address',
+          border: OutlineInputBorder(),
+        ),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter your address';
+          }
+          return null;
+        },
+        initialValue: _address,
+        onSaved: (value) {
+          _address = value!;
+        },
+      );
+    }
+  }
 
   void _updateLocation() async {
- 
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .update({
-        'location': _address,
-      });
-    
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      'location': _address,
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    _fetchUserData();
     return Scaffold(
+      backgroundColor: Color(0xFFEDEDED),
       appBar: AppBar(
           title: Text('Confirm Your Information'),
           leading: IconButton(
@@ -67,7 +92,7 @@ void _fetchUserData() async {
               );
             },
           )),
-      body: Consumer<Cart>(builder: (context, cart, child ) {
+      body: Consumer<Cart>(builder: (context, cart, child) {
         return SingleChildScrollView(
           padding: EdgeInsets.all(20),
           child: Column(
@@ -75,7 +100,7 @@ void _fetchUserData() async {
             children: [
               Center(
                 child: Icon(
-                  Icons.shopping_cart_checkout,
+                  Icons.shopping_cart_outlined,
                   color: Colors.green,
                   size: 80.0,
                 ),
@@ -92,25 +117,7 @@ void _fetchUserData() async {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 5),
-                          TextFormField(
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              icon: Icon(Icons.location_pin),
-                              hintText: 'Confirm your Address',
-                              helperText: 'Address',
-                              border: OutlineInputBorder(),
-                            ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your address';
-                              }
-                              return null;
-                            },
-                            initialValue: _address,
-                            onSaved: (value) {
-                              _address = value!;
-                            },
-                          ),
+                          _buildAddressField(), //Confirm your address
                         ],
                       ),
                     ),
@@ -124,7 +131,10 @@ void _fetchUserData() async {
                           TextFormField(
                             keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
-                              hintText: 'Enter your phone number',
+                              filled: true,
+                              fillColor: Color.fromARGB(150, 255, 255, 255),
+                              hintText:
+                                  'Enter your phone number', //Confirm your phone number
                               icon: Icon(Icons.phone_android),
                               helperText: 'Phone Number',
                               border: OutlineInputBorder(),
@@ -146,6 +156,7 @@ void _fetchUserData() async {
                     Center(
                         child: Container(
                             child: ElevatedButton(
+                      //Order Now button
                       style: ElevatedButton.styleFrom(
                         primary: Colors.green,
                         onPrimary: Colors.white,
@@ -155,93 +166,114 @@ void _fetchUserData() async {
                             borderRadius: BorderRadius.circular(32.0)),
                         minimumSize: Size(360, 60),
                       ),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          _updateLocation();
-                        } if(_phone!.isEmpty || _address!.isEmpty){
-                              return null;
-                        }else{
-                          
-                        String userId = FirebaseAuth.instance.currentUser!.uid;
-                        DocumentSnapshot userSnapshot = await FirebaseFirestore
-                            .instance
-                            .collection('users')
-                            .doc(userId)
-                            .get();
+                      onPressed: isOrderButtonEnabled
+                          ? () async {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                _updateLocation();
+                              }
+                              if (_phone != null && _address != null) {
+                                String userId =
+                                    FirebaseAuth.instance.currentUser!.uid;
+                                DocumentSnapshot userSnapshot =
+                                    await FirebaseFirestore.instance
+                                        .collection('users')
+                                        .doc(userId)
+                                        .get();
 
-                        CollectionReference cartCollection =
-                            FirebaseFirestore.instance.collection('Cart');
+                                CollectionReference cartCollection =
+                                    FirebaseFirestore.instance
+                                        .collection('Cart');
 
-                        Map<String, dynamic> userData =
-                            userSnapshot.data() as Map<String, dynamic>;
-                        String userName = userData['name'];
-                        String userLocation = userData['location'];
-                        String userEmail = userData['email'];
+                                Map<String, dynamic> userData =
+                                    userSnapshot.data() as Map<String, dynamic>;
+                                String userName = userData['name'];
+                                String userLocation = userData['location'];
+                                String userEmail = userData['email'];
 
-                        String orderDetails = '';
-                        for (int i = 0; i < cart.items.length; i++) {
-                          final item = cart.items[i];
-                          orderDetails += '${item.name} (${item.quantity}) \n';
-                        }
+                                String orderDetails = '';
+                                for (int i = 0; i < cart.items.length; i++) {
+                                  final item = cart.items[i];
+                                  orderDetails +=
+                                      '${item.name} (${item.quantity}) \n';
+                                }
 
-                        // Generate a unique order ID using a Timestamp
-                        Timestamp timestamp = Timestamp.now();
-                        String orderId =
-                            'Order-${timestamp.seconds}-${timestamp.nanoseconds}';
-                        String? phone = _phone;
+                                // Generate a unique order ID using a Timestamp
+                                Timestamp timestamp = Timestamp.now();
+                                String orderId =
+                                    'Order-${timestamp.seconds}-${timestamp.nanoseconds}';
+                                String? phone = _phone;
 
-                        Map<String, dynamic> orderData = {
-                          'orderId': orderId, // Add orderId field
-                          'order': orderDetails,
-                          'totalPrice': cart.getTotal().toStringAsFixed(2),
-                          'userName': userName,
-                          'userLocation': userLocation,
-                          'userEmail': userEmail,
-                          'userPhone': phone,
-                        };
+                                Map<String, dynamic> orderData = {
+                                  'orderId': orderId, // Add orderId field
+                                  'order': orderDetails,
+                                  'totalPrice':
+                                      cart.getTotal().toStringAsFixed(2),
+                                  'userName': userName,
+                                  'userLocation': userLocation,
+                                  'userEmail': userEmail,
+                                  'userPhone': phone,
+                                };
 
-                        try {
-                          await cartCollection.add(orderData);
-                          print('Order added to Firestore');
-                          cart.clearCart();
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Column(children: [
-                                  Center(
-                                    child: Text(
-                                      'Thank you',
-                                      style: TextStyle(letterSpacing: 1),
-                                    ),
-                                  ),
-                                  Image.network(
-                                      "https://cdn-icons-png.flaticon.com/128/3502/3502601.png"),
-                                ]),
-                                content: Text(
-                                    'Your order has been done Successfully ! Thank you for using the app.'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      navigateAndFinish(
-                                        context,
-                                        Category(),
+                                try {
+                                  await cartCollection.add(orderData);
+                                  print(
+                                      'Order added to Firestore'); //Order added to firebase
+                                  cart.clearCart();
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Column(
+                                          children: [
+                                            Center(
+                                              child: Text(
+                                                'Thank you',
+                                                style:
+                                                    TextStyle(letterSpacing: 1),
+                                              ),
+                                            ),
+                                            Image.network(
+                                              "https://cdn-icons-png.flaticon.com/128/3502/3502601.png",
+                                            ),
+                                          ],
+                                        ),
+                                        content: Text(
+                                          'Your order has been done Successfully! Thank you for using the app.',
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              navigateAndFinish(
+                                                context,
+                                                Category(),
+                                              );
+                                            },
+                                            child: Center(
+                                              child: Text('Back to Home'),
+                                            ),
+                                          ),
+                                        ],
                                       );
                                     },
-                                    child: Center(child: Text('Back to Home')),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        } catch (error) {
-                          print('Failed to add order: $error');
-                        }
-
-                        }
-
-                      },
+                                  );
+                                  setState(() {
+                                    isOrderButtonEnabled = false;
+                                  });
+                                } catch (error) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content:
+                                          Text("Failed to add order: $error"),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
+                              } else {
+                                return null;
+                              }
+                            }
+                          : null,
                       child: Text(
                         'Order Now',
                         style: TextStyle(fontSize: 20),
