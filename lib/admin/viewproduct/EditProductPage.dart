@@ -89,6 +89,7 @@ class _EditPageState extends State<EditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFEDEDED),
       appBar: AppBar(
         title: Text('Edit Item'),
       ),
