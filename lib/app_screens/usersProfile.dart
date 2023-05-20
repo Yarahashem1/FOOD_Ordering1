@@ -18,8 +18,6 @@ class _MyProfileState extends State<MyProfile> {
   var emailController = TextEditingController();
   var locationController = TextEditingController();
   late String userId;
-  late TextEditingController _nameTextController;
-  late TextEditingController _locationTextController;
 
   void _showLogoutConfirmDialog(BuildContext context) async {
     bool? result = await showDialog<bool>(
@@ -35,26 +33,26 @@ class _MyProfileState extends State<MyProfile> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context, false);
-              },
-              child: Text(
-                'Cancel',
-                style: TextStyle(
-                    color: Colors.grey,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
                 Navigator.pop(context, true);
               },
               child: Text(
                 'Confirm',
                 style: TextStyle(
-                    color: Colors.green,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w600),
+                  color: Colors.red,
+                  fontStyle: FontStyle.normal,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontStyle: FontStyle.normal,
+                ),
               ),
             ),
           ],
@@ -66,7 +64,6 @@ class _MyProfileState extends State<MyProfile> {
     }
   }
 
-// TODO function get profile
   Future getAccountInfo(String id) async {
     print('the id user is : $id');
     setState(() {
@@ -107,7 +104,6 @@ class _MyProfileState extends State<MyProfile> {
     }
   }
 
-// TODO function update account user
   Future updateUserAccount(String id) async {
     print('the id user is : $id');
     setState(() {
@@ -129,8 +125,6 @@ class _MyProfileState extends State<MyProfile> {
   @override
   void initState() {
     super.initState();
-    _nameTextController = TextEditingController();
-    _locationTextController = TextEditingController();
     getIdSharedRefrance().then((_) {
       if (uIdCustomer != null) {
         getAccountInfo(uIdCustomer!);
@@ -141,8 +135,6 @@ class _MyProfileState extends State<MyProfile> {
 
   @override
   void dispose() {
-    _nameTextController.dispose();
-    _locationTextController.dispose();
     nameController.dispose();
     locationController.dispose();
     super.dispose();
@@ -161,6 +153,7 @@ class _MyProfileState extends State<MyProfile> {
             fontStyle: FontStyle.normal,
           ),
         ),
+        centerTitle: true,
         backgroundColor: Colors.green,
         elevation: 0,
         iconTheme: IconThemeData(
@@ -168,7 +161,7 @@ class _MyProfileState extends State<MyProfile> {
         ),
         leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back_ios,
+            Icons.arrow_back,
             size: 25,
             color: Colors.white,
           ),
@@ -193,151 +186,150 @@ class _MyProfileState extends State<MyProfile> {
       ),
       body: _loading == true
           ? Center(
-              child: CircularProgressIndicator(
-                color: Colors.blue,
-              ),
-            )
+        child: CircularProgressIndicator(
+          color: Colors.blue,
+        ),
+      )
           : Padding(
-              padding: const EdgeInsets.only(left: 25, top: 10),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  //  aliggnment: Alignment.center,
-                  children: [
-                    // SizedBox(height: 20),
-                    Container(
-                      height: 80,
-                      width: 80,
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: AssetImage('images/pr.jpeg'),
-                            fit: BoxFit.cover),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-
-                    SizedBox(height: 20),
-                    Card(
-                      margin: EdgeInsets.symmetric(horizontal: 30),
-                      elevation: 8,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: nameController,
-                          enabled: true,
-                          decoration: InputDecoration(
-                            labelText: 'Your Name :',
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.all(8.0),
-                          ),
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 12,
-                            height: 0.8,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 20),
-                    Card(
-                      margin: EdgeInsets.symmetric(horizontal: 30),
-                      elevation: 8,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: emailController,
-                          enabled: false,
-                          decoration: InputDecoration(
-                            labelText: 'Your Email :',
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.all(8.0),
-                          ),
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 12,
-                            height: 0.8,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 20),
-                    Card(
-                      margin: EdgeInsets.symmetric(horizontal: 30),
-                      elevation: 8,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: locationController,
-                          enabled: true,
-                          decoration: InputDecoration(
-                            labelText: 'Location :',
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.all(8.0),
-                          ),
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 12,
-                            height: 0.8,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 40),
-                    ElevatedButton(
-                      onPressed: () {
-                        _performMyProfile();
-                        updateUserAccount(uIdCustomer!);
-                      },
-                      child: Container(
-                        width: 315,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Update',
-                            style: const TextStyle(
-                              color: Color(0XFFFFFFFF),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 255),
-                      child: ButtomBar(),
-                    )
-                  ],
+        padding: const EdgeInsets.only(left: 25, top: 0),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 60,
+                width: 60,
+                decoration: const BoxDecoration(
+                  color: Colors.grey,
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: AssetImage('images/pr.jpeg'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
+              SizedBox(height: 10),
+              Text(
+                'My information',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.normal,
+                ),
+              ),
+              SizedBox(height: 20),
+              Card(
+                margin: EdgeInsets.symmetric(horizontal: 30),
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: nameController,
+                    enabled: true,
+                    decoration: InputDecoration(
+                      labelText: 'Your Name:',
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.all(8.0),
+                    ),
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 12,
+                      height: 0.8,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Card(
+                margin: EdgeInsets.symmetric(horizontal: 30),
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: emailController,
+                    enabled: false,
+                    decoration: InputDecoration(
+                      labelText: 'Your Email:',
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.all(8.0),
+                    ),
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 12,
+                      height: 0.8,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Card(
+                margin: EdgeInsets.symmetric(horizontal: 30),
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: locationController,
+                    enabled: true,
+                    decoration: InputDecoration(
+                      labelText: 'Location:',
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.all(8.0),
+                    ),
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 12,
+                      height: 0.8,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 40),
+              ElevatedButton(
+                onPressed: () {
+                  _performMyProfile();
+                },
+                child: Container(
+                  width: 315,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Update',
+                      style: const TextStyle(
+                        color: Color(0XFFFFFFFF),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -348,8 +340,7 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   bool _checkData() {
-    if (_nameTextController.text.isNotEmpty &&
-        _locationTextController.text.isNotEmpty) {
+    if (nameController.text.isNotEmpty && locationController.text.isNotEmpty) {
       return true;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
