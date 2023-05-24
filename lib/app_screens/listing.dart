@@ -1,6 +1,7 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_screens/widget/Food.dart';
+import 'package:flutter_application_1/app_screens/widget/buttom_bar.dart';
 import 'package:provider/provider.dart';
 import 'category.dart';
 import 'componen/cart.dart';
@@ -52,128 +53,130 @@ class _FoodListingBodyState extends State<FoodListingBody> {
             child: SizedBox(
               height: double.infinity,
               width: double.infinity,
-              child: Column(
-                children: [
-                  Container(
-                    height: 240,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      //  borderRadius: BorderRadius.all(Radius.circular(10)),
-                      image: DecorationImage(
-                          image: NetworkImage(food['food']?.url ?? ''),
-                          fit: BoxFit.fill),
+              child: ListView(shrinkWrap: true, children: [
+                Column(
+                  children: [
+                    Container(
+                      height: 240,
+                      width: 200,
+                      decoration: BoxDecoration(
+                        //  borderRadius: BorderRadius.all(Radius.circular(10)),
+                        image: DecorationImage(
+                            image: NetworkImage(food['food']?.url ?? ''),
+                            fit: BoxFit.fill),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: Column(
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Center(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            '${food['food']?.name ?? ''}',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '${food['food']?.price ?? ''}\$',
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          //add to cart button
+                        ],
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
-                        Text(
-                          '${food['food']?.name ?? ''}',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                        Container(
+                          // margin:const EdgeInsets.only(left: 15),
+                          child: const Text(
+                            'Descrption',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: MediaQuery.of(context).size.height * .01,
                         ),
-                        Text(
-                          '${food['food']?.price ?? ''}\$',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
+                        Container(
+                          //   margin:const EdgeInsets.only(left: 15),
+                          height: 150,
+                          width: 300,
+                          child: Text(
+                            '${food['food']?.description ?? ''}',
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.grey),
                           ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        //add to cart button
                       ],
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        // margin:const EdgeInsets.only(left: 15),
-                        child: const Text(
-                          'Descrption',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * .01,
-                      ),
-                      Container(
-                        //   margin:const EdgeInsets.only(left: 15),
-                        height: 150,
-                        width: 300,
-                        child: Text(
-                          '${food['food']?.description ?? ''}',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.grey),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.green,
-                        onPrimary: Colors.white,
-                        shadowColor: Colors.greenAccent,
-                        elevation: 3,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(32.0)),
-                        minimumSize: Size(320, 55),
-                      ),
-                      child: Text(
-                        'Add Item to Cart',
-                        style: TextStyle(
-                            fontSize: 21, fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: () {
-                        // Get a reference to the Cart object using Provider
-                        Cart cart = Provider.of<Cart>(context, listen: false);
-                        // Add a new item to the cart
-                        cart.addItem(
-                          CartItem(
-                            name: food['food']?.name ?? '',
-                            imageUrl: food['food']?.url ?? '',
-                            // price: double.parse((food['food']?.price ?? '')),
-                            price: double.parse(food['food']?.price ?? ''),
-                          ),
-                        );
-                      },
-                      onLongPress: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => CartPage()),
-                        );
-                      },
+                    SizedBox(
+                      height: 15,
                     ),
-                  ),
-                ],
-              ),
+                    Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+                          onPrimary: Colors.white,
+                          shadowColor: Colors.greenAccent,
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32.0)),
+                          minimumSize: Size(320, 55),
+                        ),
+                        child: Text(
+                          'Add Item to Cart',
+                          style: TextStyle(
+                              fontSize: 21, fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {
+                          // Get a reference to the Cart object using Provider
+                          Cart cart = Provider.of<Cart>(context, listen: false);
+                          // Add a new item to the cart
+                          cart.addItem(
+                            CartItem(
+                              name: food['food']?.name ?? '',
+                              imageUrl: food['food']?.url ?? '',
+                              // price: double.parse((food['food']?.price ?? '')),
+                              price: double.parse(food['food']?.price ?? ''),
+                            ),
+                          );
+                        },
+                        onLongPress: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => CartPage()),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ]),
             ),
           ),
         ),

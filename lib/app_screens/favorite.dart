@@ -25,6 +25,7 @@ class _favoriteState extends State<favorite> {
       length: 1,
       child: SafeArea(
         child: Scaffold(
+          backgroundColor: Color(0xFFEDEDED),
           appBar: AppBar(
             backgroundColor: Colors.green,
             title: Text("Favorite"),

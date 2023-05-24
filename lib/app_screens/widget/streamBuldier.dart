@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:connectivity/connectivity.dart';
 import '../../components_login/components.dart';
 import '../componen/fav.dart';
+
 import '../widget/Food.dart';
 
 class StreamBuldierWidget extends StatefulWidget {
@@ -20,7 +21,20 @@ class StreamBuldierWidget extends StatefulWidget {
 class _StreamBuldierWidgetState extends State<StreamBuldierWidget> {
   List<dynamic> items = [];
   String listingRoute = '/listing_screen';
- 
+  bool isOffline = false;
+  @override
+  void initState() {
+    super.initState();
+    checkConnectivity();
+  }
+
+  Future<void> checkConnectivity() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      isOffline = connectivityResult != ConnectivityResult.none;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -55,8 +69,7 @@ class _StreamBuldierWidgetState extends State<StreamBuldierWidget> {
                 child: Column(
                   children: [
                     InkWell(
-                      onTap: () async {
-                        print(items[index]['name']);
+                      onTap: () {
                         navigateAndFinishRoute(
                           context,
                           widget,
@@ -136,8 +149,8 @@ class _StreamBuldierWidgetState extends State<StreamBuldierWidget> {
                                     child: IconButton(
                                       onPressed: () {
                                         snapshot.data.docs.length == 0
-                                            ? addToFavourite(index,items)
-                                            : deleteFavourite(index,items);
+                                            ? addToFavourite(index, items)
+                                            : deleteFavourite(index, items);
                                       },
                                       icon: snapshot.data.docs.length == 0
                                           ? Icon(
@@ -166,6 +179,7 @@ class _StreamBuldierWidgetState extends State<StreamBuldierWidget> {
             },
           );
         }
+
         return Center(
           child: CircularProgressIndicator(
             backgroundColor: Colors.green,
