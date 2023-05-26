@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'admin/adminHome.dart';
+import 'app_screens/widget/buttom_navigationbar.dart';
 import 'cashe.dart';
 import 'app_screens/componen/cart.dart';
 import 'app_screens/listing.dart';
@@ -25,7 +26,7 @@ void main() async {
   if (uIdAdmin != null) {
     widget = adminHome();
   } else if (uIdCustomer != null) {
-    widget = Category();
+    widget = ButtomNavigationBar();
   } else {
     widget = OnBoarding();
   }

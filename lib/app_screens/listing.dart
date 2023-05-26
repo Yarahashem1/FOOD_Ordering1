@@ -1,8 +1,8 @@
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_screens/widget/Food.dart';
-import 'package:flutter_application_1/app_screens/widget/buttom_bar.dart';
+import 'package:flutter_application_1/app_screens/widget/buttom_navigationbar.dart';
 import 'package:provider/provider.dart';
+import '../components_login/components.dart';
 import 'category.dart';
 import 'componen/cart.dart';
 import 'componen/cart_item.dart';
@@ -43,7 +43,7 @@ class _FoodListingBodyState extends State<FoodListingBody> {
           leading: InkWell(
             child: Icon(Icons.arrow_back_ios),
             onTap: () {
-              Navigator.pop(context, true);
+              navigateAndFinish(context, ButtomNavigationBar());
             },
           ),
         ),

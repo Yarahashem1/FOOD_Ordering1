@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/app_screens/category.dart';
 import 'package:flutter_application_1/app_screens/cart1.dart';
+import 'package:flutter_application_1/app_screens/widget/buttom_navigationbar.dart';
 import 'package:provider/provider.dart';
 import '../components_login/components.dart';
 import 'componen/cart.dart';
@@ -244,10 +245,8 @@ class _ConfirmInformationPageState extends State<ConfirmInformationPage> {
                                         actions: <Widget>[
                                           TextButton(
                                             onPressed: () {
-                                              navigateAndFinish(
-                                                context,
-                                                Category(),
-                                              );
+                                              navigateAndFinish(context,
+                                                  ButtomNavigationBar());
                                             },
                                             child: Center(
                                               child: Text('Back to Home'),

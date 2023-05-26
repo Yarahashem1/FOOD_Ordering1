@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_screens/search.dart';
-import 'package:flutter_application_1/app_screens/widget/buttom_bar.dart';
 import 'package:flutter_application_1/app_screens/widget/streamBuldier.dart';
 
 class Category extends StatefulWidget {
@@ -88,7 +87,7 @@ class _CategoryState extends State<Category> {
               Flexible(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: TabBarView(
                     children: [
                       StreamBuldierWidget(
@@ -110,7 +109,6 @@ class _CategoryState extends State<Category> {
                   ),
                 ),
               ),
-              ButtomBar(),
             ],
           ),
         ),

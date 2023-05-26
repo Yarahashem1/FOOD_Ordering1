@@ -13,6 +13,7 @@ import 'package:flutter_application_1/register/register.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../app_screens/widget/buttom_navigationbar.dart';
 import '../cashe.dart';
 import '../app_screens/category.dart';
 
@@ -54,7 +55,7 @@ class SocialLoginScreen extends StatelessWidget {
               ).then((value) {
                 navigateTo(
                   context,
-                  Category(),
+                  ButtomNavigationBar(),
                 );
               });
             }

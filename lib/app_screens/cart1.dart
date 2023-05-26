@@ -1,12 +1,11 @@
-import 'package:flutter_application_1/app_screens/category.dart';
 import 'package:flutter_application_1/app_screens/cart2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app_screens/widget/buttom_bar.dart';
+
+import 'package:flutter_application_1/app_screens/widget/buttom_navigationbar.dart';
 import 'package:provider/provider.dart';
 import '../components_login/components.dart';
 import 'componen/cart.dart';
 import 'componen/cart_item.dart';
-import 'componen/my_icon.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({key}) : super(key: key);
@@ -24,10 +23,7 @@ class CartPage extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: () {
-            navigateAndFinish(
-              context,
-              Category(),
-            );
+            navigateAndFinish(context, ButtomNavigationBar());
           },
         ),
       ),
@@ -43,7 +39,7 @@ class CartPage extends StatelessWidget {
                 ),
                 margin:
                     EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),
-                padding: EdgeInsets.only(top: 15 ,bottom: 15 ,left: 20),
+                padding: EdgeInsets.only(top: 15, bottom: 15, left: 20),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -88,10 +84,9 @@ class CartPage extends StatelessWidget {
                     final item = cart.items[index];
                     return Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white
-                      ),
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white),
                       margin: EdgeInsets.all(10),
                       padding: EdgeInsets.all(10),
                       child: ListTile(
@@ -158,7 +153,6 @@ class CartPage extends StatelessWidget {
                   ],
                 ),
               ),
-              ButtomBar(),
             ],
           );
         },

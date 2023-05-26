@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:connectivity/connectivity.dart';
 import '../../components_login/components.dart';
 import '../componen/fav.dart';
-
 import '../widget/Food.dart';
 
+//make code resuble
 class StreamBuldierWidget extends StatefulWidget {
   final String categoryName;
 
@@ -21,18 +21,9 @@ class StreamBuldierWidget extends StatefulWidget {
 class _StreamBuldierWidgetState extends State<StreamBuldierWidget> {
   List<dynamic> items = [];
   String listingRoute = '/listing_screen';
-  bool isOffline = false;
   @override
   void initState() {
     super.initState();
-    checkConnectivity();
-  }
-
-  Future<void> checkConnectivity() async {
-    final connectivityResult = await Connectivity().checkConnectivity();
-    setState(() {
-      isOffline = connectivityResult != ConnectivityResult.none;
-    });
   }
 
   @override
