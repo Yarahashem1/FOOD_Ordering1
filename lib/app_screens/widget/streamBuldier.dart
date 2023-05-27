@@ -21,6 +21,7 @@ class StreamBuldierWidget extends StatefulWidget {
 class _StreamBuldierWidgetState extends State<StreamBuldierWidget> {
   List<dynamic> items = [];
   String listingRoute = '/listing_screen';
+
   @override
   void initState() {
     super.initState();
@@ -77,20 +78,26 @@ class _StreamBuldierWidgetState extends State<StreamBuldierWidget> {
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
-                          Image.network(
-                            items[index]['url'],
+                          Container(
                             width: MediaQuery.of(context).size.width * 0.2,
                             height: MediaQuery.of(context).size.width * 0.2,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Visibility(
-                                visible: !kIsWeb,
-                                child: CircularProgressIndicator(),
-                              );
-                            },
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              image: DecorationImage(
+                                onError: (exception, stackTrace) => Visibility(
+                                  visible: !kIsWeb,
+                                  child: CircularProgressIndicator(),
+                                ),
+                                image: NetworkImage(
+                                  items[index]['url'],
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                           Visibility(
-                            visible: kIsWeb,
+                            visible: kIsWeb, //defult true
                             child: CircularProgressIndicator(),
                           ),
                         ],

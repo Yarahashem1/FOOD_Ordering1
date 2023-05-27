@@ -2,6 +2,8 @@ import 'package:flutter_application_1/app_screens/cart2.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_application_1/app_screens/widget/buttom_navigationbar.dart';
+import 'package:flutter_application_1/c/c.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../components_login/components.dart';
 import 'componen/cart.dart';
@@ -23,6 +25,7 @@ class CartPage extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: () {
+            index=0;
             navigateAndFinish(context, ButtomNavigationBar());
           },
         ),

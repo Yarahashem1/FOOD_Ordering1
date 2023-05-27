@@ -2,8 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/admin/cubitAddFood/addFood.dart';
 import 'package:flutter_application_1/app_screens/category.dart';
+import 'package:flutter_application_1/c/c.dart';
 import 'package:flutter_application_1/login/login.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'admin/adminHome.dart';
@@ -26,6 +28,7 @@ void main() async {
   if (uIdAdmin != null) {
     widget = adminHome();
   } else if (uIdCustomer != null) {
+    index= 0;
     widget = ButtomNavigationBar();
   } else {
     widget = OnBoarding();
@@ -46,7 +49,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => Cart()),
         BlocProvider(create: (BuildContext context) => AppCubit()),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         routes: {
           '/listing_screen': (context) => FoodListingBody(),
           '/login': (context) => SocialLoginScreen(),

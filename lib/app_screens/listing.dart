@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_screens/widget/Food.dart';
 import 'package:flutter_application_1/app_screens/widget/buttom_navigationbar.dart';
+import 'package:flutter_application_1/c/c.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import '../components_login/components.dart';
 import 'category.dart';
@@ -43,7 +45,7 @@ class _FoodListingBodyState extends State<FoodListingBody> {
           leading: InkWell(
             child: Icon(Icons.arrow_back_ios),
             onTap: () {
-              navigateAndFinish(context, ButtomNavigationBar());
+              Navigator.pop(context);
             },
           ),
         ),
@@ -167,10 +169,12 @@ class _FoodListingBodyState extends State<FoodListingBody> {
                           );
                         },
                         onLongPress: () {
-                          Navigator.push(
+                          index=2;
+                          Get.to(ButtomNavigationBar());
+                          /*Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => CartPage()),
-                          );
+                          );*/
                         },
                       ),
                     ),

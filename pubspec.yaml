@@ -45,6 +45,7 @@ dependencies:
   dots_indicator:
   provider: 
   cached_network_image:
+  get: ^4.6.5
   # firebase
   firebase_auth: 
   firebase_core: 

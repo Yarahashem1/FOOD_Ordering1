@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_screens/widget/Food.dart';
 
 import 'package:flutter_application_1/app_screens/widget/buttom_navigationbar.dart';
+import 'package:flutter_application_1/c/c.dart';
 import 'componen/fav.dart';
 import '../components_login/components.dart';
 
@@ -34,6 +35,7 @@ class _favoriteState extends State<favorite> {
               key: ValueKey("back"),
               child: Icon(Icons.arrow_back_ios),
               onTap: () {
+                index= 0;
                 navigateAndFinish(context, ButtomNavigationBar());
               },
             ),

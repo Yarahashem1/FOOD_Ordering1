@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/c/c.dart';
 
 import '../cart1.dart';
 import '../category.dart';
@@ -7,14 +8,15 @@ import '../favorite.dart';
 import '../usersProfile.dart';
 
 class ButtomNavigationBar extends StatefulWidget {
-  const ButtomNavigationBar({Key? key}) : super(key: key);
+  // ButtomNavigationBar({});
+
 
   @override
   State<ButtomNavigationBar> createState() => _ButtomNavigationBarState();
 }
 
 class _ButtomNavigationBarState extends State<ButtomNavigationBar> {
-  int _selectedIndex = 0;
+  int _selectedIndex = index;
   final List<Widget> _pages = [
     Category(),
     favorite(),

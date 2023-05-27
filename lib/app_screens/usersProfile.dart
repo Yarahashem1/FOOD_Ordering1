@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app_screens/widget/buttom_navigationbar.dart';
+import 'package:flutter_application_1/c/c.dart';
 import 'package:flutter_application_1/main.dart';
 import '../cashe.dart';
 import '../components_login/components.dart';
@@ -166,6 +167,7 @@ class _MyProfileState extends State<MyProfile> {
             color: Colors.white,
           ),
           onPressed: () {
+            index= 0;
             navigateAndFinish(context, ButtomNavigationBar());
           },
         ),

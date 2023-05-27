@@ -4,6 +4,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/admin/adminHome.dart';
+import 'package:flutter_application_1/c/c.dart';
 
 import 'package:flutter_application_1/components_login/components.dart';
 import 'package:flutter_application_1/login/cubit/cubit.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_application_1/login/cubit/states.dart';
 import 'package:flutter_application_1/login/forget_password.dart';
 import 'package:flutter_application_1/register/register.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../app_screens/widget/buttom_navigationbar.dart';
@@ -53,10 +55,12 @@ class SocialLoginScreen extends StatelessWidget {
                 key: 'uIdCustomer',
                 value: state.uId,
               ).then((value) {
-                navigateTo(
-                  context,
-                  ButtomNavigationBar(),
-                );
+                index= 0;
+                Get.to(ButtomNavigationBar());
+                // navigateTo(
+                //   context,
+                //   ButtomNavigationBar(index: 0,),
+                // );
               });
             }
           }
